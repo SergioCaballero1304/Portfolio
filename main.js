@@ -18,7 +18,40 @@ btn.addEventListener('click', () => {
     iconMoon.classList.toggle('hidden', isDark);
 });
 
-/*------Cursor personalizado------*/
+// ------Scroll reveal------
+
+const observer = new IntersectionObserver(
+    (entries) => {
+        entries.forEach((e) => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                observer.unobserve(e.target);
+            }
+        });
+    },
+    {threshold: 0.3},
+);
+
+document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+// ------Volver al inicio------
+
+const scrollBtn = document.getElementById('scrollTop');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+        scrollBtn.classList.add('visible');
+    } else {
+        scrollBtn.classList.remove('visible');
+    }
+});
+
+scrollBtn.addEventListener('click', () => {
+    history.pushState(null, '', window.location.pathname);
+    window.scrollTo({top: 0});
+});
+
+// ------Cursor personalizado------
 
 const dot = document.getElementById('cursorDot');
 const ring = document.getElementById('cursorRing');
